@@ -20,6 +20,7 @@
     "paths": {
       "@config/*": ["./config/*"],
       "@db/*": ["./db/*"],
+      "@auth/*": ["./src/auth/*"],
       "@users/*": ["./src/users/*"],
       "@products/*": ["./src/products/*"],
       "@utils/*": ["./src/utils/*"]
