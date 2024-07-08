@@ -1,5 +1,6 @@
-import config from 'config';
 import { DataSource, DataSourceOptions } from 'typeorm';
+
+import config from '../config/index';
 
 export const datasourceOptions: DataSourceOptions = {
   type: 'postgres',
@@ -8,8 +9,8 @@ export const datasourceOptions: DataSourceOptions = {
   username: config.DB_USERNAME,
   password: config.DB_PASSWORD,
   database: config.DB_NAME,
-  entities: [],
-  migrations: [],
+  entities: ['build/src/**/*.entity.{ts,js}'],
+  migrations: ['build/src/db/migrations/*.{ts,js}'],
   logging: false,
   synchronize: false,
 };
