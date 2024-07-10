@@ -10,4 +10,5 @@ export default {
   DB_PORT: process.env.DB_PORT,
   EMAIL_USERNAME: process.env.EMAIL_USERNAME,
   EMAIL_PASSWORD: process.env.EMAIL_PASSWORD,
+  JWT_SECRET: process.env.JWT_SECRET,
 };

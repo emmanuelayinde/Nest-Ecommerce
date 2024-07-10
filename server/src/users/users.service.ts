@@ -3,31 +3,53 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { UserEntity } from './entities/user.entity';
+import { FindUserByEmailDto, FindUserByIdDto } from './dto/find-user-dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(UserEntity)
-    private userEntity: Repository<UserEntity>,
+    private userRepository: Repository<UserEntity>,
   ) {}
 
-  createUser() {
-    return 'This action adds a new user';
+  async createUser(data: CreateUserDto) {
+    const newUser = this.userRepository.create({ ...data });
+    return await this.userRepository.save(newUser);
   }
 
-  findUserById() {
-    return `This action returns all users`;
+  async findUserById({ id }: FindUserByIdDto) {
+    return await this.userRepository.findOneBy({ id });
   }
 
-  findUserByEmail() {
-    return `This action returns all users`;
+  async findUserByEmail({ email }: FindUserByEmailDto) {
+    return await this.userRepository.findOneBy({ email });
   }
 
-  deleteUser() {
-    return `This action returns a user`;
+  async updateUserProfile(data: UpdateUserDto) {
+    return await this.userRepository.update(
+      { id: data.id },
+      {
+        ...data,
+      },
+    );
   }
 
-  updateUser() {
-    return `This action updates auser`;
+  // async updateUserPassword(data: UpdateUserDto) {
+  //   return await this.userRepository.update(
+  //     { id: data.id },
+  //     {
+  //       ...data,
+  //     },
+  //   );
+  // }
+
+  async softDeleteUser({ id }) {
+    return await this.userRepository.softDelete({ id });
+  }
+
+  async hardDeleteUser({ id }) {
+    return await this.userRepository.delete({ id });
   }
 }
